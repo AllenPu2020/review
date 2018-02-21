@@ -119,84 +119,84 @@ china
 ```
 
 #### *3. 语法*
-- 1）去除了 `<>`，全部改用 `!=`
-- 2）去除 **\`\`**，全部改用 `repr()`
-- 3）关键词加入 `as` 和 `with`，还有 `True`, `False`, `None`
-- 4）整型除法返回浮点数，要得到整型结果，请使用 `//`
-- 5）加入 `nonlocal` 语句。使用 `noclocal x` 可以直接指派外围（非全局）变量
-- 6）去除 `print` 语句，加入 `print()` 函数实现相同的功能。同样的还有 `exec` 语句，已经改为 `exec()`函数
-- 7）改变了顺序操作符的行为，例如 `x<y`，当 `x` 和 `y` 类型不匹配时抛出 `TypeError` 而不是返回随即的 `bool` 值
-- 8）输入函数改变了，删除了 `raw_input`，用 `input` 代替：
+- 去除了 `<>`，全部改用 `!=`
+- 去除 `` ` ` `` ，全部改用 `repr()`
+- 关键词加入 `as` 和 `with`，还有 `True`, `False`, `None`
+- 整型除法返回浮点数，要得到整型结果，请使用 `//`
+- 加入 `nonlocal` 语句。使用 `noclocal x` 可以直接指派外围（非全局）变量
+- 去除 `print` 语句，加入 `print()` 函数实现相同的功能。同样的还有 `exec` 语句，已经改为 `exec()`函数
+- 改变了顺序操作符的行为，例如 `x<y`，当 `x` 和 `y` 类型不匹配时抛出 `TypeError` 而不是返回随即的 `bool` 值
+- 输入函数改变了，删除了 `raw_input`，用 `input` 代替：
 	- py2 ``guess = int(raw_input('Enter an integer: '))``
 	- py3 ``guess = int(input('Enter an integer: '))``
-- 9）去除元组参数解包。不能 `def(a, (b, c)):pass` 这样定义函数了
-- 10）新式的`8进制`字变量，相应地修改了 `oct()` 函数。
-- 11）增加了`2进制`字面量和 `bin()` 函数
-- 12）扩展的可迭代解包。在 py3里，`a, b, *rest = seq`和 `*rest, a = seq` 都是合法的，
+- 去除元组参数解包。不能 `def(a, (b, c)):pass` 这样定义函数了
+- 新式的`8进制`字变量，相应地修改了 `oct()` 函数。
+- 增加了`2进制`字面量和 `bin()` 函数
+- 扩展的可迭代解包。在 py3里，`a, b, *rest = seq`和 `*rest, a = seq` 都是合法的，
 	- `rest` 是 列表类型
 	- `seq` 是可迭代的。
-- 13）新的 `super()`，可以不给 `super()`传参数，
-- 14）新的 `metaclass` 语法：
+- 新的 `super()`，可以不给 `super()`传参数，
+- 新的 `metaclass` 语法：
 ```python
 class Foo(*bases, **kwds):
 	pass
 ```
-- 15）支持 `class decorator`。用法与函数 `decorator` 一样：
+- 支持 `class decorator`。用法与函数 `decorator` 一样：
 
 #### *4. 字符串和字节串*
-- 1）现在字符串只有 `str` 一种类型，但它跟 2.x 版本的 `unicode` 几乎一样。
-- 2）关于`字节串`，请参阅**数据类型**的第2条目
+- 现在字符串只有 `str` 一种类型，但它跟 2.x 版本的 `unicode` 几乎一样。
+- 关于`字节串`，请参阅**数据类型**的第2条目
 
 #### *5. 数据类型*
-- 1）py3 去除了 `long` 类型，现在只有一种整型`int`，但它的行为就像 py2的 `long`
-- 2）新增了 `bytes` 类型，对应于py2版本的八位串，定义一个 bytes 字面量的方法如下：
+- py3 去除了 `long` 类型，现在只有一种整型`int`，但它的行为就像 py2的 `long`
+- 新增了 `bytes` 类型，对应于py2版本的八位串，定义一个 bytes 字面量的方法如下：
 	- str 对象和 bytes 对象可以使用`.encode()` *(str -> bytes)* 以及 `.decode()` *(bytes -> str)* 方法相互转化。
-- 3）*`dict`* 的`.keys()`、`.items()` 和`.values()`方法返回**迭代器**，而之前的 `iterkeys()`等函数都被废弃。
+- *`dict`* 的`.keys()`、`.items()` 和`.values()`方法返回**迭代器**，而之前的 `iterkeys()`等函数都被废弃。
 	- 同时去掉的还有`dict.has_key()`，用 `in` 替代它吧
 
 #### *6. 面向对象*
-- 1）引入抽象基类 `ABCs` *`(Abstraact Base Classes)`*。
-- 2）容器类和迭代器类被 `ABCs` 化，所以 `cellections` 模块里的类型比 Py2.5 多了很多。
+- 引入抽象基类 `ABCs` *`(Abstraact Base Classes)`*。
+- 容器类和迭代器类被 `ABCs` 化，所以 `cellections` 模块里的类型比 Py2.5 多了很多。
 
 		>>> import collections
 		>>> print('\n'.join(dir(collections)))
 	- `Callable` `Container` `Hashable` `ItemsView` `Iterable` `Iterator` `KeysView` `Mapping`
 	- 另外，数值类型也被 `ABCs` 化。关于这两点，请参阅 `PEP 3119` 和 `PEP 3141`。
 
-- 3）迭代器的 `next()` 方法改名为 `__next__()` ，并增加内置函数 `next()`，用以调用迭代器的 `__next__()` 方法
-- 4）增加了`@abstractmethod` 和 `@abstractproperty` 两个 `decorator`，编写抽象方法（属性）更加方便。
+- 迭代器的 `next()` 方法改名为 `__next__()` ，并增加内置函数 `next()`，用以调用迭代器的 `__next__()` 方法
+- 增加了`@abstractmethod` 和 `@abstractproperty` 两个 `decorator`，编写抽象方法（属性）更加方便。
 
 #### *7. 异常*
-- 1）所以异常都从 `BaseException` 继承，并删除了 `StardardError`
-- 2）去除了异常类的序列行为和 `.message` 属性
-- 3）用 `raise Exception(args)` 代替 `raise Exception, args` 语法
-- 4）捕获异常的语法改变，引入了 `as` 关键字来标识异常实例
-- 5）异常链，因为`__context__`在 3.0a1 版本中没有实现
+- 所有异常都从 `BaseException` 继承，并删除了 `StardardError`
+- 去除了异常类的序列行为和 `.message` 属性
+- 用 `raise Exception(args)` 代替 `raise Exception, args` 语法
+- 捕获异常的语法改变，引入了 `as` 关键字来标识异常实例
+- 异常链，因为`__context__`在 3.0a1 版本中没有实现
 
 #### *8. 模块变动*
-- 1）移除了 `cPickle` 模块，可以使用 `pickle` 模块代替。最终我们将会有一个透明高效的模块。
-- 2）移除了 `imageop` 模块
-- 3）移除了 `audiodev`, `Bastion`, `bsddb185`, `exceptions`, `linuxaudiodev`, `md5`, `MimeWriter`, `mimify`, `popen2`,
+- 移除了 `cPickle` 模块，可以使用 `pickle` 模块代替。最终我们将会有一个透明高效的模块。
+- 移除了 `imageop` 模块
+- 移除了 `audiodev`, `Bastion`, `bsddb185`, `exceptions`, `linuxaudiodev`, `md5`, `MimeWriter`, `mimify`, `popen2`,
 `rexec`, `sets`, `sha`, `stringold`, `strop`, `sunaudiodev`, `timing` 和 `xmllib` 模块
-- 4）移除了 `bsddb` 模块(单独发布，可以从 http://www.jcea.es/programacion/pybsddb.htm 获取)
-- 5）移除了 `new` 模块
-- 6）`os.tmpnam()` 和 `os.tmpfile()` 函数被移动到 `tmpfile` 模块下
-- 7）`tokenize` 模块现在使用 `bytes` 工作。主要的入口点不再是 `generate_tokens`，而是 `tokenize.tokenize()`
+- 移除了 `bsddb` 模块(单独发布，可以从 http://www.jcea.es/programacion/pybsddb.htm 获取)
+- 移除了 `new` 模块
+- `os.tmpnam()` 和 `os.tmpfile()` 函数被移动到 `tmpfile` 模块下
+- `tokenize` 模块现在使用 `bytes` 工作。主要的入口点不再是 `generate_tokens`，而是 `tokenize.tokenize()`
 
 #### *9. 其它*
-- 1）`xrange()` 改名为 `range()`，要想使用 `range()`获得一个 *`list`*，必须显式调用：
+- `xrange()` 改名为 `range()`，要想使用 `range()`获得一个 *`list`*，必须显式调用：
 
 		>>> list(range(10)) 
 		[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-- 2）`bytes` 对象不能 `hash`，也不支持 `b.lower()`、`b.strip()` 和 `b.split()` 方法，但对于后两者可以使用 `b.strip(b' \n\t\r\f')` 和 `b.split(b' ')` 来达到相同目的
-- 3）`zip()`、`map()`和 `filter()`都返回迭代器。
+- `bytes` 对象不能 `hash`，也不支持 `b.lower()`、`b.strip()` 和 `b.split()` 方法，但对于后两者可以使用 `b.strip(b' \n\t\r\f')` 和 `b.split(b' ')` 来达到相同目的
+- `zip()`、`map()`和 `filter()`都返回迭代器。
 	- 去除了`apply()`、`callable()`、`coerce()`、`execfile()`、`reduce()`、 `reload ()`
 	- 现在可以使用 `hasattr()`来替换 `callable()`
 		- `hasattr()`的语法如：`hasattr(string, '__name__')`
-- 4）`string.letters` 和相关的`.lowercase` 和`.uppercase` 被去除，请改用 `string.ascii_letters`等
-- 5）`__getslice__`系列成员被废弃。`a[i:j]`根据上下文转换为 `a.__getitem__(slice(i, j))` 或 `__setitem__` 和 `__delitem__` 调用
-- 6）`file` 类被废弃
+- `string.letters` 和相关的`.lowercase` 和`.uppercase` 被去除，请改用 `string.ascii_letters`等
+- `__getslice__`系列成员被废弃。`a[i:j]`根据上下文转换为 `a.__getitem__(slice(i, j))` 或 `__setitem__` 和 `__delitem__` 调用
+- `file` 类被废弃
 
 
 ### 9. 什么是PEP8
@@ -334,36 +334,36 @@ class Foo(*bases, **kwds):
 
 ### 14. 面向对象有哪些技术
 
-- 类(Class)
+- **类(Class)**
 	- 用来描述具有相同的属性和方法的对象的集合。
 	- 它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。
 
-- 类变量
+- **类变量**
 	- 类变量在整个实例化的对象中是公用的。
 	- 类变量定义在类中且在函数体之外。
 	- 类变量通常不作为实例变量使用。
 
-- 数据成员
+- **数据成员**
 	- 类变量或者实例变量用于处理类及其实例对象的相关的数据。
 
-- 方法重写
+- **方法重写**
 	- 如果从父类继承的方法不能满足子类的需求，可以对其进行改写
 	- 这个过程叫方法的覆盖（override），也称为方法的重写。
 
-- 实例变量
+- **实例变量**
 	- 定义在方法中的变量，只作用于当前实例的类。
 
-- 继承
+- **继承**
 	- 即一个派生类`derived class` 继承基类 `base class` 的属性和方法。
 	- 继承也允许把一个派生类的对象作为一个基类对象对待。
 
 		> 一个 Dog 类型的对象派生自 Animal 类，这是模拟"是一个（is-a）"关系（例图，Dog是一个 Animal）。
 
-- 实例化：创建一个类的实例，类的具体对象。
+- **实例化**：创建一个类的实例，类的具体对象。
 
-- 方法：类中定义的函数。
+- **方法**：类中定义的函数。
 
-- 对象：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。
+- **对象**：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。
 
 
 ### 15. 静态方法和类方法
@@ -416,19 +416,19 @@ sudo crontab -e
 
 ### 19. python的多进程与多线程的运行机制是什么？有什么区别？分别在什么情况下用
 
-- 运行机制：
+- **运行机制**：
 	- **进程**是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位
 	- **线程**是进程的一个实体,是 CPU 调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源
 	
 		> 如果制造数据的速度时快时慢，缓冲区的好处就体现出来了。当数据制造快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区中。程序计数器,一组寄存器和栈,但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.
 
-- 区别：
+- **区别**：
 	- 多进程稳定性好，一个子进程崩溃了，不会影响主进程以及其余进程
 	- 创建进程的代价非常大，因为操作系统要给每个进程分配固定的资源
 	- 操作系统对进程的总数会有一定的限制，若进程过多，操作系统调度都会存在问题，会造成假死状态
 	- 多线程效率较高一些，但是致命的缺点是任何一个线程崩溃都可能造成整个进程的崩溃，因为它们共享了进程的内存资源池。
 
-- 使用情况：
+- **使用情况**：
 	- IO 密集型，多线程。
 	- CPU 密集型，多进程
 		- 特别是所使用的机器是多核或多CPU的。
