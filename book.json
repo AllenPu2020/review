@@ -1,0 +1,7 @@
+{
+    "plugins": ["toggle-chapters",
+    	"-lunr",
+    	"-search", 
+ 		"splitter"
+    ]
+}
