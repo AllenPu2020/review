@@ -1,7 +1,25 @@
 {
-    "plugins": ["toggle-chapters",
-    	"-lunr",
-    	"-search", 
- 		"splitter"
-    ]
+	"plugins": ["toggle-chapters",
+		"-lunr",
+		"-search", 
+		"splitter",
+		"search-pro",
+		"-sharing",
+		"github-buttons",
+		"anchors",
+		"copy-code-button"
+	],
+	"pluginsConfig": {
+		
+		"github-buttons": {
+			"buttons": [
+			{
+				"user": "Allen-PJY",
+				"repo": "review",
+				"type": "star",
+				"size": "small",
+				"count": true
+			}]
+		}
+	}
 }
