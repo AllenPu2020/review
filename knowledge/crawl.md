@@ -274,36 +274,36 @@ No.|步骤|方法
 
 - 应用层
 
-    Abbr.   | Protocol                              | Description
-    -|-|-
-     FTP    | File Transfer Protocol                | 文件传输协议
-     HTTP   | Hyper Text Transfer Protocol          | 超文本传输协议
-     SMTP   | Simple Mail Transfer Protocol         | 简单邮件传输协议
-     POP3   | Post Office Protocol                  | 邮局协议
-     DNS    | Domain Name System                    | 域名系统
+Abbr.   | Protocol                              | Description
+-|-|-
+ FTP    | File Transfer Protocol                | 文件传输协议
+ HTTP   | Hyper Text Transfer Protocol          | 超文本传输协议
+ SMTP   | Simple Mail Transfer Protocol         | 简单邮件传输协议
+ POP3   | Post Office Protocol                  | 邮局协议
+ DNS    | Domain Name System                    | 域名系统
 
 - 传输层
 
-    Abbr.   | Protocol                              | Description
-    -|-|-
-     TCP    | Transmission Control Potocol          | 传输控制协议
-     UDP    | User Datagram Potocol                 | 用户数据报协议
+Abbr.   | Protocol                              | Description
+-|-|-
+ TCP    | Transmission Control Potocol          | 传输控制协议
+ UDP    | User Datagram Potocol                 | 用户数据报协议
 
 - 网络层
 
-    Abbr.   | Protocol                              | Description
-    -|-|-
-     IP     | Internet Protocol                     | 网络协议
-     ARP    | Adderss Resolution Protocol           | 地址解析协议
-     ICMP   | Internet Control Message Protocol     | 控制报文协议
-     HDLC   | High Data Link Control                | 高级数据链路控制
+Abbr.   | Protocol                              | Description
+-|-|-
+ IP     | Internet Protocol                     | 网络协议
+ ARP    | Adderss Resolution Protocol           | 地址解析协议
+ ICMP   | Internet Control Message Protocol     | 控制报文协议
+ HDLC   | High Data Link Control                | 高级数据链路控制
 
 - 数据链路层
 
-    Abbr.   | Protocol                              | Description
-    -|-|-
-     SLIP   | Serial Line Internet Protocol         | 串行线路网际协议
-     PPP    |                                       | 点对点协议
+Abbr.   | Protocol                              | Description
+-|-|-
+ SLIP   | Serial Line Internet Protocol         | 串行线路网际协议
+ PPP    |                                       | 点对点协议
 
 - 物理层
     - 放大/再生若的信号，在两个电缆段之间复制每一个比特
