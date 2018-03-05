@@ -1,6 +1,6 @@
 # Python编码
 
-### 1. 大文件的读取
+### 大文件的读取
 
 - 读取大几G的大文件，可以利用生成器 `generator`
 - 对可迭代对象`file`，进行迭代遍历：`for line in file`，会自动地使用缓冲IO（bufferedIO）以及内存管理，而不必担心任何大文件的问题。
@@ -10,7 +10,7 @@ with open('filename') as file:
 do_things(line)
 ```
 
-### 1. 按字典中的value值进行排序
+### 按字典中的value值进行排序
 
 ```python
 d = {'a': 22, 'b': 44, 'c': 11, 'd': 33}
@@ -18,7 +18,7 @@ sorted(d.items(), key=lambda x: x[1])
 ```
 
 
-### 5. 斐波那契数列
+### 斐波那契数列
 
 > 斐波那契数列：简单地说，起始两项为 0 和 1，此后的项分别为它的前两项之和。
 
@@ -56,7 +56,7 @@ for index in f:
     print(index)
 ```
 
-### 11. a=1, b=2, 不用中间变量交换a和b的值（两种方法）
+### a=1, b=2, 不用中间变量交换a和b的值（两种方法）
 ```python
 a, b = b, a
 ```
@@ -68,7 +68,7 @@ a = a - b
 ```
 
 
-### 13. 求今天是本年、本月、本周的第几天
+### 求今天是本年、本月、本周的第几天
 ```python
 # -*- coding:utf-8 -*-
 import datetime
@@ -85,7 +85,7 @@ print('是本月第{}天'.format(month_index))
 print('是本周第{}天'.format(week_index))
 ```
 
-### 18. 去除列表里面最大值
+### 去除列表里面最大值
 
 ```python
 import numpy
@@ -95,7 +95,7 @@ ret.remove(numpy.max(ret))
 ```
 
 
-### 19. 如何编写有序字典
+### 如何编写有序字典
 
 ```python
 from collections import OrderedDict
@@ -109,7 +109,7 @@ print(order_dict)  # 显示有序字典
 print('\n'.join(dir(OrderedDict)))  # 列出所有的成员函数
 ```
 
-### 25. 有一个已经排好序的数组 l = [0, 10, 20, 30, 40, 50]. 现输入一个数， 要求按原来的规律将它插入数组中
+### 有一个已经排好序的数组 l = [0, 10, 20, 30, 40, 50]. 现输入一个数， 要求按原来的规律将它插入数组中
 
 ```python
 num_list = [0, 10, 20, 30, 40, 50]
@@ -123,7 +123,7 @@ for i in range(len(num_list)):
 print('The new sorted list is:{}'.format(num_list))
 ```
 
-### 27. 解释 `列表推导式` 和 `生成器` 区别
+### 解释 `列表推导式` 和 `生成器` 区别
 
 ```python
 nums = [lambda x: i*x for i in range(4)]

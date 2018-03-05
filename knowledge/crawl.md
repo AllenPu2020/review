@@ -1,36 +1,36 @@
 # 爬虫
 
-### 1. 说一下爬虫程序执行的流程（框架和三方库均可）
+### 说一下爬虫程序执行的流程（框架和三方库均可）
 
 
-### 2. 爬虫在向数据库存数据开始和结束都会发一条消息，是scrapy哪个模块实现的
+### 爬虫在向数据库存数据开始和结束都会发一条消息，是scrapy哪个模块实现的
 - Item Pipeline scrapy的信号处理使用的是 dispatch模块
 
-### 3. 爬取下来的数据如何去重，说一下具体的算法依据
+### 爬取下来的数据如何去重，说一下具体的算法依据
 - 通过MD5生成电子指纹来判断页面是否改变
 - `nutch` 去重。
     - nutch 中digest 是对采集的每一个网页内容的 32位哈希值，如果两个网页内容完全一样，它们的 digest 值肯定会 一样。
 
-### 4. 写爬虫是用`多进程`还是`多线程`更好 
+### 写爬虫是用`多进程`还是`多线程`更好 
 - IO 密集型代码(文件处理、网络爬虫等)，多线程能够有效提升效率
 - 单线程下有IO操作会进行IO 等待，造成不必要的时间浪费
 - 而开启多线程能在线程A等待时，自动切换到线程B，可以不浪费CPU 的资源，从而能提升程序执行效率
 - 在实际的数据采集过程中，既考虑网速和响应的问题，也需要考虑自身机器的硬件情况，来设置多进程或多线程。
 
-### 5. 说一下numpy和pandas的区别 分别的应用场景
+### 说一下numpy和pandas的区别 分别的应用场景
 - `Numpy`是`Scipy`的扩展包，纯数学。
 - `Pandas` 以矩阵为基础的数学计算模块。
     - 提供了一套名为DataFrame的数据结构，比较契合统计分析中的表结构
     - 提供了计算接口，可用`Numpy`或其它方式进行计算。
 
-### 6. 验证码如何处理
+### 验证码如何处理
 - Scrapy自带处理验证码
 - 获取到验证码图片的url，调用打码平台处理验证码
 
-### 7. 微信公众号数据如何抓取
+### 微信公众号数据如何抓取
 - sogou 微信搜索数据
 
-### 8. 动态的股票信息如何抓取
+### 动态的股票信息如何抓取
 
 - 股票数据的获取目前有如下两种方法可以获取:
     - http/JavaScript 接口取数据
@@ -43,12 +43,12 @@
 
     > ``var hq_str_sh600519="贵州茅台,738.000,741.970,736.410,743.560,730.000,736.100,736.590,2599190,1912613830.000,300,736.100,100,736.060,100,736.050,500,736.000,200,735.900,200,736.590,900,736.600,100,736.670,100,736.760,400,736.770,2018-03-02,15:00:00,00";``
 
-### 9. 爬虫部署
+### 爬虫部署
 - 利用`scrapyd`进行爬虫部署
 
     > [scrapyd部署总结](http://blog.csdn.net/xiaoquantouer/article/details/53164306)
 
-### 10. scrapy去重
+### scrapy去重
 
 - 数据量不大时，可以直接放在内存里面进行去重，python可以使用set()进行去重
 - 数据需要持久化时可以使用redis的set数据结构。
@@ -62,7 +62,7 @@ Bloomfilter就是将去重对象映射到几个内存“位”，通过几个位
 > simhash最牛逼的一点就是将一个文档，最后转换成一个64位的字节，暂且称之为特征字，
 然后判断重复只需要判断他们的特征字的距离是不是小于n（根据经验这个n一般取值为3），就可以判断两个文档是否相似。
 
-### 11. 分布式有哪些方案，哪一种最好
+### 分布式有哪些方案，哪一种最好
 - `celery`、`beanstalk`，`gearman`
 
 - 个人认为 `gearman` 比较好。原因主要有以下几点：
@@ -72,7 +72,7 @@ Bloomfilter就是将去重对象映射到几个内存“位”，通过几个位
 
 
 
-### 15. 谈一谈你对Selenium和PhantomJS了解
+### 谈一谈你对Selenium和PhantomJS了解
 - Selenium是一个Web的自动化测试工具，可以根据我们的指令，让浏览器自动加载页面，获取需要的数据，甚至页面截屏，或者判断网站上某些动作是否发
 生。Selenium自己不带浏览器，不支持浏览器的功能，它需要与第三方浏览器结合在一起才能使用。但是我们有时候需要让它内嵌在代码中运行，所以我们
 可以用一个叫PhantomJS的工具代替真实的浏览器。
@@ -85,7 +85,7 @@ Selenium库里有个叫WebDriver的API。WebDriver有点儿像可以加载网站
 - 如果我们把Selenium和PhantomJS结合在一起，就可以运行一个非常强大的网络爬虫了，
 这个爬虫可以处理JavaScript、Cookies、headers，以及任何我们真实用户需要做的事情。
 
-### 16. 常见的反爬虫和应对方法
+### 常见的反爬虫和应对方法
 - **1).通过Headers反爬虫**
     - 从用户请求的Headers反爬虫是最常见的反爬虫策略，在爬虫中修改或者添加Headers就能很好的绕过。
     - 很多网站都会对Headers的**User-Agent**进行检测 -> 将浏览器的User-Agent复制到爬虫的Headers中
@@ -104,18 +104,18 @@ Selenium库里有个叫WebDriver的API。WebDriver有点儿像可以加载网站
     - 能够直接模拟ajax请求获取数据固然是极好的，但是有些网站把ajax请求的所有参数全部加密了。我们根本没办法构造自己所需要的数据的请求。
     - 这种情况下就用selenium+phantomJS，调用浏览器内核，并利用phantomJS执行js来模拟人为操作以及触发页面中的js脚本
 
-### 17. 动态加载又对及时性要求很高怎么处理
+### 动态加载又对及时性要求很高怎么处理
 - Selenium+Phantomjs
 - 尽量不使用sleep而使用WebDriverWait
 
-### 18. 分布式爬虫主要解决什么问题
+### 分布式爬虫主要解决什么问题
 - ip
 - 带宽
 - cpu
 - io
 
 
-### 20. python爬虫有哪些常用技术
+### python爬虫有哪些常用技术
 - Scrapy
 - requests
 - XPath
@@ -123,13 +123,13 @@ Selenium库里有个叫WebDriver的API。WebDriver有点儿像可以加载网站
 - urllib
 - urllib2
 
-### 21. 简单说一下你对scrapy的了解
+### 简单说一下你对scrapy的了解
 scrapy是一个快速(fast)、高层次(high-level)的基于python的web爬虫构架。
 用来下载、并解析web页面,其parse->yielditem->pipeline流程是所有爬虫的
 固有模式。构造形式主要分
 spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
 
-### 22. Scrapy的优缺点
+### Scrapy的优缺点
 - 优点：
     - scrapy是异步的
     - 采取可读性更强的xpath代替正则
@@ -144,7 +144,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
     - 基于twisted框架，运行中的exception是不会干掉reactor，并且异步框架出错后
     - 是不会停掉其他任务的，数据出错后难以察觉。
 
-### 23. scrapy和request
+### scrapy和request
 - scrapy是封装起来的框架，他包含了下载器，解析器，日志及异常处理
 - scrapy基于多线程，twisted的方式处理，对于固定单个网站的爬取开发，有优势
 - scrapy对于多网站爬取100个网站，并发及分布式处理方面，不够灵活，不便调整与括展
@@ -152,7 +152,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
 - request请求，下载，解析全部自己处理，灵活性更高
 - request高并发与分布式部署也非常灵活，对于功能可以更好实现.
 
-### 30. 常用的`反爬虫`及`反反爬虫`措施
+### 常用的`反爬虫`及`反反爬虫`措施
 
 分类|措施|反反
 -|-|-
@@ -160,7 +160,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
 **分析用户行为** | 并发量过大<br> 请求过于频繁<br> 在线活动时间过长<br> 访问到隐藏资源<br> | 降低并发数<br> 加入随机延时<br> 模拟人作息<br> 分析隐藏资源(hidden属性/text为空/超出窗口范围)
 **动态加载数据** | AJAX<br> JavaScript | 浏览器抓包，获取JSON数据<br> JS逆向解析(可能有多次跳转)
 
-### 38. scrapy框架运行的机制
+### scrapy框架运行的机制
 
 ![scrapy](http://p4emt3ysm.bkt.clouddn.com/scrapy.png)
 
@@ -177,7 +177,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
 - 11) `Pipeline`: 将数据保存到文件或者数据库
 - 12) `Scheduler`: 检查请求队列中是否有请求，如果有重复执行上述步骤，如果没有程序结束
 
-### 39. scrapy和scrapy-redis的区别？为什么选择redis数据库
+### scrapy和scrapy-redis的区别？为什么选择redis数据库
 - 区别：
     - scrapy是一个Python爬虫框架，爬取效率极高，具有高度定制性，但是**不支持分布式**
     - scrapy-redis一套基于redis数据库、运行在scrapy框架之上的组件，可以让scrapy**支持分布式策略**
@@ -188,7 +188,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
     - 数据都是缓存在内存中
     - 因此基于redis的分布式爬虫，对请求和高频读取效率非常高
 
-### 40. 实现模拟登录的方式有哪些
+### 实现模拟登录的方式有哪些
 - 设置cookies
     - 使用一个具有登录状态的cookie，结合请求报头一起发送
     - 可以直接发送get请求，访问登录后才能访问的页面
@@ -198,30 +198,30 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
     - 然后结合账户密码，再发送post请求，即可登录成功
     - 然后根据获取的cookie信息，继续访问之后的页面。
 
-### 41. 简单介绍下scrapy的异步处理
+### 简单介绍下scrapy的异步处理
 - scrapy框架的异步机制是基于twisted异步网络框架处理的
 - 在settings.py文件里可以设置具体的并发量数值（默认是并发量16）
 
-### 3. Phontomjs相关
+### Phontomjs相关
 
 - 主程序退出后，selenium 不保证 phantomJS 也成功退出，最好手动关闭phantomJS 进程。（有可能会导致多个 phantomJS 进程运行，占用内存）
 - WebDriverWait 虽然可能会减少延时，但是目前存在 bug（各种报错），这种情况可以采用 sleep。
 - phantomJS 爬数据比较慢，可以选择多线程。如果运行的时候发现有的可以运行，有的不能，可以尝试将 phantomJS 改成 Chrome。
 
-### 5. scrapy-redis 去重原理
+### scrapy-redis 去重原理
 
 - 可见scrapy_redis是利用set数据结构来去重的，去重的对象是request的fingerprint
 - （其实就是用hashlib .sha1()对request 对象的某些字段信息进行压缩）。
 - request对象加密压缩后的一个字符串（40个字符，0~f）
 
-### 9. 怎么设置深度爬取
+### 怎么设置深度爬取
 
 - 通过在`settings.py`中设置`DEPTH_LIMIT`的值可以限制爬取深度
 - 这个深度是与`start_urls`中定义`url`的相对值。也就是相对`url`的深度。
 - 若定义`url`为http://www.domz.com/game/, `DEPTH_LIMIT`=1那么限制爬取的只能是此`url`下一级的网页。
 - 深度大于设置值的将被忽视。
 
-### 12. 代理ip里的“透明” “匿名” “高匿” 分别指什么
+### 代理ip里的“透明” “匿名” “高匿” 分别指什么
 
 - `透明代理`
     - 传送的是真实的 IP
@@ -239,7 +239,7 @@ spider.pypipeline.pyitem.pydecorator.pymiddlewares.pysetting.py
     - 不改变我们的请求信息
     - 服务器端不知道我们使用了代理
 
-### 21. `requests` 返回的 `context` 和 `text` 的区别
+### `requests` 返回的 `context` 和 `text` 的区别
 
 - `resp.text` 返回的是 `Unicode` 型的数据。
 - `resp.content` 返回的是 `bytes` 型(二进制)的数据
