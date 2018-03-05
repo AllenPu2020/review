@@ -350,3 +350,29 @@ evicted_keys | 1547380
 
 ### 23. Redis有几个库
 - 16个（0-15）
+
+### 2. Redis由于存储的指纹过多怎么办
+
+- 设置生存时间
+
+- 定时清理
+
+- 持久化
+
+- 主从
+
+### 22. `MySQLdb.connect`中 `cursorclass = MySQLdb.cursors.DictCursor` 参数用途
+
+- `cursorclass` 是创建 `cursor` 对象的参数，执行查询后每条记录的结果以列表形式表示。
+
+- `cursors` 参数为 `MySQLdb.cursors.DictCursor` 表示按字典形式返回查询记录。
+
+### 23. 用conn.execute()执行sql返回什么
+
+- 返回执行 SQL 语句后受影响的行数
+
+### 24. cursor.execute查询结果后，有哪些方法可以获得结果
+
+- `fetchone()`
+- `fetchall()`
+- `fetchmany()` 可指定返回个数 `fetchmany(3)`
