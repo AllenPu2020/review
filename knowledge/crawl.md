@@ -91,7 +91,7 @@ Bloomfilter就是将去重对象映射到几个内存“位”，通过几个位
     - 比如，在进行登录操作，通过GET请求，用户名和密码都会暴露再URL上，因为登录页面有可能被浏览器缓存以及其他人查看浏览器的历史记录的原因，此时的用户名和密码就很容易被他人拿到了。
     - 除此之外，GET请求提交的数据还可能会造成`Cross-site request frogery`攻击。
 
-### 13. 为什么要三次握手和四次挥手
+### 13. 三次握手和四次挥手
 
 - **三次握手**
 建立连接的过程是利用客户端服务器模式，假设主机A为客户端，主机B为服务器端。
@@ -107,8 +107,10 @@ Bloomfilter就是将去重对象映射到几个内存“位”，通过几个位
     - 然后服务器向客户端发送一个FIN，告诉客户端应用程序关闭。
     - 当客户端收到服务器端的FIN是，回复一个ACK给服务器端。其中ack的值等于FIN+SEQ
 
-- 为什么要4次挥手？
-    - 确保数据能够完成传输
+- 名词解释
+    - SYN: Synchronize Sequence Numbers 同步序列编号
+    - ACK: Acknowledgement Number 确认编号
+    - FIN: Finish 结束标志
 
 ![三次握手&四次挥手图解](http://p4emt3ysm.bkt.clouddn.com/tcp.png)
 
@@ -334,6 +336,8 @@ No.|步骤|方法
 
 ### 34. HTTPS通信步骤
 
+![https](http://p4emt3ysm.bkt.clouddn.com/https%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B.png)
+
 - （1）客户使用https的URL访问Web服务器，要求与Web服务器建立SSL连接。
 - （2）Web服务器收到客户端请求后，会将网站的证书信息（证书中包含公钥）传送一份给客户端。
 - （3）客户端的浏览器与Web服务器开始协商SSL连接的安全等级，也就是信息加密的等级。
@@ -391,6 +395,8 @@ No.|步骤|方法
     - username=xxxx&password=1234
 
 ### 38. scrapy框架运行的机制
+
+![scrapy](http://p4emt3ysm.bkt.clouddn.com/scrapy.png)
 
 - 1) `Spiders`: 将`start_urls`里的地址封装成请求，并提交给引擎
 - 2) `Spider Middlewares`: 请求去重
