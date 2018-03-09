@@ -412,3 +412,329 @@ evicted_keys | 1547380
 	- **不支持事务**
 	- **占用空间过大**
 	- **维护工具不够成熟**
+
+
+### Redis 命令行
+
+> k: key(键)<br>
+v: value(值)<br>
+f: field(属性)<br>
+m: member(元素) 类似于value<br>
+index: 列表元素的索引<br>
+start: 列表元素的开始索引<br>
+stop: 列表元素的结束索引<br>
+count: 列表元素出现的次数<br>
+score: 集合元素的权重<br>
+
+#### key
+- 查找
+	- `keys pattern`
+
+- 是否存在
+	- `exists k`
+
+- 查看类型
+	- `type k`
+
+- 删除键
+	- `del k1 k2 ...`
+
+- 过期时间
+	- `expire k v`
+
+- 查看过期时间
+	- `ttl k`
+
+#### string
+- 设置键值
+	- `set k v`
+
+- 设置多个键值
+	- `mset k1 v1 k2 v2 ...`
+
+- 获取键值
+	- `get k`
+
+- 获取多个键值
+	- `mget k1 k2 ...`
+
+- 设置键值及过期时间（秒）
+	- `setex k t v`
+
+- 追加值
+	- `append k v`
+
+#### hash
+- 设置属性值
+	- `hset k f v`
+
+- 设置多个属性值
+	- `hmset k f1 v1 f2 v2 ...`
+
+- 获取属性
+	- `hget k`
+
+- 获取属性值
+	- `hget k f`
+
+- 获取多个属性值
+	- `hmget k f1 f2 ...`
+
+- 获取所有属性值
+	- `hvals k`
+
+- 删除多个属性
+	- `hdel k f1 f2 ...`
+
+#### list
+> 头部=左侧=前<br> 尾部=右侧=后<br>
+
+> 索引/获取都是从左侧开始
+
+- 插入
+	- 从左往右插入（逆序插入）：`lpush k v1 v2 ...`
+	- 从右往左插入（正序插入）：`rpush k v1 v2 ...`
+
+- 给定元素前/后插入
+	- `linsert k before/after v_now v_new`
+
+- 修改
+	- `lset k index v`
+
+- 范围获取（按照从左到右获取）
+	- `lrange k start stop`
+
+		> **左右端点都包含，与python列表语法不同**
+
+		> start=0, 表示从第一个元素（左侧）开始
+
+		> start/stop 可以为负数（指的是索引值，获取方向依然是从左到右）
+
+		> 获取所有元素 `lrange k 0 -1` 
+
+- 删除指定元素`value`
+	- `lrem k count v`
+
+		> count > 0 从左往右删除<br>
+		  count = 0 全部删除<br>
+		  count < 0 从右往左删除<br>
+
+#### set
+- 增加元素
+	- `sadd k m1 m2 ...`
+
+- 获取所有元素
+	- `smembers k`
+
+- 删除多个元素
+	- `srem m1 m2 ...`
+
+#### zset
+- 增加元素
+	- `zadd k score1 m1 score1 m2`
+
+- 范围获取（按照权重从小到大获取）
+	- `zrange key start stop`
+
+		> 语法同`list`
+
+- 权重范围获取
+	- `zrangebyscore k score_min score_max`
+
+- 获取权重
+	- `zscore k m`
+
+- 删除指定元素
+	- `zrem k m1 m2 ...`
+
+- 删除指定权重元素
+	- `zremrangebyscore k score_min score_max`
+
+
+### Python-Redis交互
+- 与单个Redis交互
+> pip install redis
+
+```python
+from redis import StrictRedis
+
+# 构建StrictRedis对象
+sr = StrictRedis(host='localhost', port=6379, password='xxx', db=0)
+
+# 增删改查与命令行一致
+sr.set('name', 'xiaoming')
+```
+
+- 与Redis集群交互
+> pip install redis-py-cluster
+
+```python 
+from rediscluster import StrictRedisCluster
+
+# 构建所有的节点，Redis会使用CRC16算法，将键和值写到某个节点上
+startup_nodes = [
+{'host': '192.168.26.128', 'port': '7000'},
+{'host': '192.168.26.130', 'port': '7003'},
+{'host': '192.168.26.128', 'port': '7001'},
+]
+
+# 构建StrictRedisCluster对象
+src=StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True)
+
+# 增删改查与命令行一致
+result=src.set('name','xiaoming') 
+```
+
+### Django-Redis交互
+- 安装模块
+```bash
+pip install django-redis-sessions
+```
+
+- 配置
+```python
+# 修改settings文件，增加以下项
+SESSION_ENGINE = 'redis_sessions.session'<br>
+SESSION_REDIS_HOST = 'localhost'<br>
+SESSION_REDIS_PORT = 6379<br>
+SESSION_REDIS_DB = 2<br>
+SESSION_REDIS_PASSWORD = ''<br>
+SESSION_REDIS_PREFIX = 'session'<br>
+```
+
+- 增加和获取
+```python
+  def session_set(request):
+      request.session['name']='itheima'
+      return HttpResponse('ok')
+
+
+  def session_get(request):
+      name=request.session['name']
+      return HttpResponse(name)
+```
+
+```python
+url(r'^session_set/$',views.session_set),
+url(r'^session_get/$', views.session_get),
+```
+
+### Flask-Redis交互
+> 核心: 利用pickle将数据序列化，以文字流的方式缓存至redis，要用的时候再取出来进行反序列化。
+
+```python
+import redis
+from datetime import datetime
+from flask import session,request
+from ..models import db
+
+import pickle
+
+
+class Redis:
+    @staticmethod
+    def connect():
+        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+        return r
+
+    #将内存数据二进制通过序列号转为文本流，再存入redis
+    @staticmethod
+    def set_data(r,key,data,ex=None):
+        r.set(key,pickle.dumps(data),ex)
+
+    # 将文本流从redis中读取并反序列化，返回返回
+    @staticmethod
+    def get_data(r,key):
+        data = r.get(key)
+        if data is None:
+            return None
+
+        return pickle.loads(data)
+
+@home.route('/detail/<int:id>')
+def detail(id):
+    today = datetime.now().date()
+    list_goods = None
+
+    # 缓存标记，在页面显示出来
+    cached_redis_remark = ""
+
+
+    r = Redis.connect()
+
+    #商品详情
+    key = "data-cached:detail-id-%d" % (id)
+    #从redis读取缓存（不存在的商品不会缓存，因为还是获取得到None)
+    goods = Redis.get_data(r, key)
+    if current_app.config['ENABLE_CACHED_PAGE_TO_REDIS'] and goods:
+        # flash("读取缓存数据")
+        cached_redis_remark += "goods|"
+    else:
+        # flash("查询数据库")
+        goods=Goods.query.get(id)
+        #将时间转为字符串才能序列化
+        simple_goods = goods
+        if goods:
+            simple_goods.timestamp = str(goods.timestamp)
+        #缓存入redis
+        if current_app.config['ENABLE_CACHED_PAGE_TO_REDIS']:
+            # 加入redis缓存,5分钟过期
+            Redis.set_data(r, key, simple_goods, current_app.config['EXPIRE_CACHED_PAGE_TO_REDIS'])
+
+
+
+    #推荐商品列表
+    #推荐数量
+    recommend_count = 4 if goods else 12
+
+    key = "data-cached:detail-recommend-%d" % recommend_count
+    list_recommend_goods = Redis.get_data(r, key)
+    if current_app.config['ENABLE_CACHED_PAGE_TO_REDIS'] and list_recommend_goods:
+        # flash("读取缓存数据")
+        cached_redis_remark += "recommend|"
+    else:
+        list_recommend_goods = Goods.query.filter(Goods.coupon_expire >= today).filter_by(effective=True).limit(recommend_count).all()
+        # 缓存入redis
+        if current_app.config['ENABLE_CACHED_PAGE_TO_REDIS']:
+            # 加入redis缓存,5分钟过期
+            Redis.set_data(r, key, list_recommend_goods, current_app.config['EXPIRE_CACHED_PAGE_TO_REDIS'])
+
+
+    return render_template("home/detail.html", goods=goods,list_goods=list_recommend_goods,cached_redis_remark=cached_redis_remark)
+```
+
+### Scrapy-Redis交互
+- 安装模块
+```bash
+pip install scrapy-redis
+```
+
+- 配置
+```python
+# 修改settings.py文件，增加以下项
+
+# 指定redis数据库的连接参数
+REDIS_URL = 'redis://:password@host:port/db'
+
+# 指定管道
+ITEM_PIPELINES = {
+    # 'JD.pipelines.ExamplePipeline': 300,
+    'scrapy_redis.pipelines.RedisPipeline': 400,
+}
+
+# 指定重复过滤器模块
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+# 启用调度器模块
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+# 保持任务队列
+SCHEDULER_PERSIST = True
+```
+
+- 修改项目.py文件
+	- 导入类
+	- 修改继承
+	- 注销允许的域和起始的url
+	- 设置redis_key
+	- 设置动态允许的域(init)
