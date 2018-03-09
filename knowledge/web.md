@@ -1,5 +1,66 @@
 # web框架
 
+
+### 符合RESTful设计风格的API
+
+#### 域名
+- api部署在专用域名下
+- api放在主域名下
+
+#### 版本
+- api版本号放在url中
+
+#### 路径
+- 只能用名字不能用动词
+- 名词与数据库表对应
+- 名词用复数
+
+#### 分页
+- limtit=50
+- offset=80
+- page=2&per_page=50
+
+#### 标准HTTP方法
+- GET		获取资源		select
+- POST		新建资源		create			/不安全、非幂等 部分更新资源
+- PUT 		更新资源		create/update	/幂等			全部替代资源
+- DELETE 	删除资源		delete
+
+#### 使用幂等而不是非幂等
+
+#### 标准状态码
+- 200 ok					成功返回数据
+- 201 create				新建/修改数据成功
+- 202 accepted				进入后台排队（异步操作）
+
+- 301 movied permanently	永久性重定向
+	- www.360buy.com -> www.jd.com
+- 302 moved temporarily		临时重定向
+	- baidu.com -> www.baidu.com
+- 307 Internal Redirect		内部重定向
+	- http://www.baidu.com -> https://www.baidu.com
+
+- 401 unauthorized			未授权（需要登陆验证）
+- 403 forbidden				服务器拒绝
+- 404 not found				服务器无该资源
+- 405 Method Not Allowed	方法禁用（如用get请求需要post的网址）
+- 500 Internal Server Error	服务器内部错误
+- 502 Bad Gateway			错误网关
+
+#### 使用json
+- 尽量使用json而非xml
+
+#### 错误信息使用键值对
+- error: 'Invalid API KEY'
+
+#### 响应结果
+- 针对不同的结果返回不同的内容
+- GET 		.../goods		-> 		商品列表
+- GET		.../goods/apple ->		单件商品
+- POST 		.../goods 		-> 		新生成的商品
+- DELETE 	.../goods 		-> 		空文档
+
+
 ### 说一下`Django`的`MiddleWares` 中间件的作用
 
 - 中间件是介于 `request` 与 `response` 处理之间的一道处理过程
