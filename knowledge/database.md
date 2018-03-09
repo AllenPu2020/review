@@ -596,12 +596,12 @@ pip install django-redis-sessions
 
 ```python
 # 修改settings文件，增加以下项
-SESSION_ENGINE = 'redis_sessions.session'<br>
-SESSION_REDIS_HOST = 'localhost'<br>
-SESSION_REDIS_PORT = 6379<br>
-SESSION_REDIS_DB = 2<br>
-SESSION_REDIS_PASSWORD = ''<br>
-SESSION_REDIS_PREFIX = 'session'<br>
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 2
+SESSION_REDIS_PASSWORD = ''
+SESSION_REDIS_PREFIX = 'session'
 ```
 
 - 增加和获取
@@ -742,4 +742,4 @@ SCHEDULER_PERSIST = True
 	- 修改继承
 	- 注销允许的域和起始的url
 	- 设置redis_key
-	- 设置动态允许的域(init)
+	- 设置动态允许的域(`__init__`)
