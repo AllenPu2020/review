@@ -587,11 +587,13 @@ result=src.set('name','xiaoming')
 
 ### Django-Redis交互
 - 安装模块
+
 ```bash
 pip install django-redis-sessions
 ```
 
 - 配置
+
 ```python
 # 修改settings文件，增加以下项
 SESSION_ENGINE = 'redis_sessions.session'<br>
@@ -603,6 +605,7 @@ SESSION_REDIS_PREFIX = 'session'<br>
 ```
 
 - 增加和获取
+
 ```python
   def session_set(request):
       request.session['name']='itheima'
@@ -705,11 +708,13 @@ def detail(id):
 
 ### Scrapy-Redis交互
 - 安装模块
+
 ```bash
 pip install scrapy-redis
 ```
 
 - 配置
+
 ```python
 # 修改settings.py文件，增加以下项
 
