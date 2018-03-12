@@ -201,3 +201,25 @@ data = Data(1, 2, 3, 4, 5)
 for i in data:
     print(i)
 ```
+
+
+### 生成器
+
+```python
+class Data(object):
+    def __init__(self, *args):
+        self._data = list(args)
+
+    def __iter__(self):
+        for x in self._data:
+            yield x
+
+
+data = Data(1, 2, 3, 4, 5)
+for i in data:
+    print(i)
+```
+
+```python
+(x for x in [1, 2, 3, 4, 5])
+```
