@@ -244,3 +244,59 @@ c.close()
 c.send("never recv")  # StopIteration
 ```
 
+
+### 回调函数（阻塞版）
+
+```python
+def framework(logic, callback):
+    s = logic()
+    print('[FX] logic:', s)
+
+    print('[FX] do someting')  # 假设这一步需要很长时间
+    callback('async: ' + s)  # 这一步必须等上一步执行完成才能执行
+
+def logic():
+    s = 'mylogic'
+    return s
+
+def callback(s):
+    print(s)
+
+framework(logic, callback)
+
+
+"""
+[FX] logic: mylogic
+[FX] do someting
+async: mylogic
+"""
+```
+
+### 回调函数（非阻塞）
+
+```python
+def framework(logic):
+    try:
+        it = logic()
+        s = next(it)
+        print('[FX] logic:', s)
+
+        print('[FX] do someting')  # 假设这一步需要很长时间
+        it.send('async: ' + s)  # 不会阻塞回调函数的执行
+
+    except StopIteration:
+        pass
+
+def logic():
+    s = 'mylogic'
+    r = yield s
+    print(r)
+
+
+"""
+[FX] logic: mylogic
+[FX] do someting
+async: mylogic
+"""
+```
+
