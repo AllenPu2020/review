@@ -172,3 +172,32 @@ Out[7]: 9000112
 In [8]: f(c)
 Out[8]: 8697464
 ```
+
+
+### 标准迭代器
+
+```python
+class Data(object):
+    def __init__(self, *args):
+        self._data = list(args)
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.next()
+
+    def next(self):
+        if self._index >= len(self._data):
+            raise StopIteration()
+        d = self._data[self._index]
+        self._index += 1
+        return d
+
+
+data = Data(1, 2, 3, 4, 5)
+
+for i in data:
+    print(i)
+```
