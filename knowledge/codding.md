@@ -223,3 +223,24 @@ for i in data:
 ```python
 (x for x in [1, 2, 3, 4, 5])
 ```
+
+
+### 使用yield创建协程
+
+```python
+def coroutine():
+    print('coroutine start...')
+    ret = None
+
+    while True:
+        s = yield ret
+        print('reuslt: {}'.format(s))
+
+c = coroutine()  # 使用函数创建协程对象
+c.send(None)  # next(c)也可以
+c.send(1)  # result: 1
+c.send(2)  # result: 2
+c.close()
+c.send("never recv")  # StopIteration
+```
+
