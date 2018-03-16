@@ -238,3 +238,19 @@ Abbr.   | Protocol                              | Description
 - 请求头
 - 请求体
     - username=xxxx&password=1234
+
+### URL链接中的utm简析
+
+```url
+http://app.xxxx.com/?utm_source=ucweb&utm_medium=cpt&utm_term=zhilian&utm_content=textlink&utm_campaign=nov
+```
+
+参数|解释|用途
+-|-|-
+utm_source | 广告系列来源 | 必填属性。使用 utm_source 来标识搜索引擎、简报名称或其他来源。<br>*示例：utm_source=google*
+utm_medium | 广告系列媒介 | 必填属性。使用 utm_medium 来标识媒介，比如电子邮件或每次点击费用。<br>*示例：utm_medium=cpc*
+utm_term | 广告系列字词 | 用于付费搜索。使用utm_term来注明此广告的关键字。<br>*示例：utm_term=running+shoes*
+utm_content | 广告系列内容 | 用于A/B测试和按内容进行定位的广告。使用utm_content区分指向同一网址的广告或链接。<br>*示例：utm_content=logolink或utm_content=textlink*
+utm_campaign | 广告系列名称 | 用于关键字分析。使用utm_campaign来标识特定的产品促销活动或战略性广告系列。<br> *示例：utm_campaign=spring_sale*
+
+UTM = "Urchin Tracking Module", 跟踪模块
